@@ -1,0 +1,28 @@
+/* Write your CSS here */
+
+.todo-container {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: Roboto;
+  font-size: 14px;
+  color: #000000;
+  font-weight: 500;
+  margin-right: 14px;
+}
+
+.deleteBtn {
+  background-color: #ffffff;
+  border-color: #ff0b37;
+  border-width: 1px;
+  border-radius: 8px;
+  font-size: 12px;
+  height: 24px;
+  color: #ff0b37;
+}
+
+.btn-container {
+  padding: 6px;
+}
