@@ -1,28 +1,80 @@
-/* Write your CSS here */
-
-.todo-container {
+.todo-item {
   display: flex;
-  margin-bottom: 16px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin: 10px 0;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
-.title {
-  font-family: Roboto;
-  font-size: 14px;
-  color: #000000;
-  font-weight: 500;
-  margin-right: 14px;
+.todo-checkbox {
+  transform: scale(1.2);
+  cursor: pointer;
 }
 
-.deleteBtn {
-  background-color: #ffffff;
-  border-color: #ff0b37;
-  border-width: 1px;
-  border-radius: 8px;
-  font-size: 12px;
-  height: 24px;
-  color: #ff0b37;
+.todo-text {
+  flex: 1;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  word-break: break-word;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
 }
 
-.btn-container {
+.todo-text.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.todo-text.editable {
+  border: 1px solid #ccc;
+  border-radius: 6px;
   padding: 6px;
+  background-color: #fafafa;
+}
+
+.todo-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.edit-button.save {
+  background-color: #28a745;
+}
+
+.delete-button {
+  background-color: white;
+  color: #ff004c;
+  border: 1px solid #ff004c;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
+}
+
+.delete-button:hover {
+  background-color: #ff004c;
+  color: white;
 }

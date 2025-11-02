@@ -2,68 +2,87 @@ import {Component} from 'react'
 import './index.css'
 import TodoItem from '../TodoItem'
 
-const initialTodosList = [
-  {
-    id: 1,
-    title: 'Book the ticket for today evening',
-  },
-  {
-    id: 2,
-    title: 'Rent the movie for tomorrow movie night',
-  },
-  {
-    id: 3,
-    title: 'Confirm the slot for the yoga session tomorrow morning',
-  },
-  {
-    id: 4,
-    title: 'Drop the parcel at Bloomingdale',
-  },
-  {
-    id: 5,
-    title: 'Order fruits on Big Basket',
-  },
-  {
-    id: 6,
-    title: 'Fix the production issue',
-  },
-  {
-    id: 7,
-    title: 'Confirm my slot for Saturday Night',
-  },
-  {
-    id: 8,
-    title: 'Get essentials for Sunday car wash',
-  },
-]
-
-// Write your code here
 class SimpleTodos extends Component {
   state = {
-    todoList: initialTodosList,
+    todoList: [],
+    inputTodoTitle: '',
+    todoCount: 0,
   }
 
   deleteTodo = id => {
-    console.log('entered deleteTodo')
-    const {todoList} = this.state
-    const updatedList = todoList.filter(eachTodo => eachTodo.id !== id)
+    this.setState(prevState => ({
+      todoList: prevState.todoList.filter(eachTodo => eachTodo.id !== id),
+    }))
+  }
+
+  onInputChange = event => {
     this.setState({
-      todoList: updatedList,
+      inputTodoTitle: event.target.value,
     })
   }
 
+  addTodoItem = () => {
+    const {inputTodoTitle, todoCount, todoList} = this.state
+    if (inputTodoTitle.trim() === '') return
+
+    // Split title and number
+    const parts = inputTodoTitle.trim().split(' ')
+    const lastPart = parts[parts.length - 1]
+    const count = isNaN(lastPart) ? 1 : parseInt(lastPart)
+    const title = isNaN(lastPart)
+      ? inputTodoTitle
+      : parts.slice(0, -1).join(' ')
+
+    const newTodos = Array.from({length: count}, (_, i) => ({
+      id: todoCount + i + 1,
+      title,
+      completed: false,
+    }))
+
+    this.setState({
+      todoList: [...todoList, ...newTodos],
+      inputTodoTitle: '',
+      todoCount: todoCount + count,
+    })
+  }
+
+  toggleComplete = id => {
+    this.setState(prevState => ({
+      todoList: prevState.todoList.map(todo =>
+        todo.id === id ? {...todo, completed: !todo.completed} : todo,
+      ),
+    }))
+  }
+
   render() {
-    const {todoList} = this.state
+    const {todoList, inputTodoTitle} = this.state
 
     return (
       <div className="bg-container">
         <div className="todo-box">
           <h1 className="heading">Simple Todos</h1>
+          <div className="add-todo-container">
+            <input
+              value={inputTodoTitle}
+              type="text"
+              onChange={this.onInputChange}
+              placeholder="Enter title or 'Buy Apples 3'"
+              className="input-box"
+            />
+            <button
+              type="button"
+              className="add-btn"
+              onClick={this.addTodoItem}
+            >
+              Add
+            </button>
+          </div>
           <ul className="todo-list-container">
             {todoList.map(eachTodo => (
               <TodoItem
                 todo={eachTodo}
                 deleteTodo={this.deleteTodo}
+                toggleComplete={this.toggleComplete}
                 key={eachTodo.id}
               />
             ))}
