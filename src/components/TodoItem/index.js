@@ -4,13 +4,18 @@ import './index.css'
 class TodoItem extends Component {
   textareaRef = createRef()
 
-  state = {
-    isEditing: false,
-    text: this.props.todo.title,
+  constructor(props) {
+    super(props)
+    const {todo} = props
+    this.state = {
+      isEditing: false,
+      text: todo.title,
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.text !== this.state.text) {
+    const {text} = this.state
+    if (prevState.text !== text) {
       this.adjustTextareaHeight()
     }
   }
@@ -63,6 +68,7 @@ class TodoItem extends Component {
 
         <div className="todo-buttons">
           <button
+            type="button"
             className={`edit-button ${isEditing ? 'save' : ''}`}
             onClick={isEditing ? this.handleSaveClick : this.handleEditClick}
           >
